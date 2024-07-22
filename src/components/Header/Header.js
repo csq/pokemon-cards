@@ -14,7 +14,7 @@ function Header() {
     <>
       <Navbar bg="primary" variant="dark">
         <Container className="d-flex justify-content-center">
-          <Navbar.Brand href="#home">
+          <Navbar.Brand href="/">
             <img src={logo} style={ImageStyle} alt="Logo"/>
           </Navbar.Brand>
         </Container>
