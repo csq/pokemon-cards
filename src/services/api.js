@@ -241,7 +241,7 @@ const searchPokemonByName = (pokemonName) => {
 };
 
 const evolutionChain = {
-  Bulbasaur: ["Ivysaur", "Venusaur"],
+  Bulbasaur: ["Ivysaur", "Venusaur", "Ivysaur", "Venusaur", "Ivysaur", "Venusaur", "Ivysaur", "Venusaur"],
   Charmander: ["Charmeleon", "Charizard"],
   Squirtle: ["Wartortle", "Blastoise"],
   Caterpie: ["Metapod", "Butterfree"],
