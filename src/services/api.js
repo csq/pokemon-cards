@@ -208,7 +208,68 @@ const pokemons = [
     speed: 45,
     hp: 45,
     image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/55.svg"
-  } 
+  },
+  {
+    id: 58,
+    name: "Ivysaur",
+    types: ["grass", "poison"],
+    attack: 49,
+    defense: 49,
+    speed: 45,
+    hp: 45,
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/2.svg"
+  },
+  {
+    id: 61,
+    name: "Venusaur",
+    types: ["grass", "poison"],
+    attack: 49,
+    defense: 49,
+    speed: 45,
+    hp: 45,
+    image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/3.svg"
+  }
 ];
 
-export default pokemons
+const searchPokemonByName = (pokemonName) => {
+  for (let pokemon in pokemons) {
+    if (pokemons[pokemon].name === pokemonName) {
+      return pokemons[pokemon];
+    }
+  }
+  return null;
+};
+
+const evolutionChain = {
+  Bulbasaur: ["Ivysaur", "Venusaur"],
+  Charmander: ["Charmeleon", "Charizard"],
+  Squirtle: ["Wartortle", "Blastoise"],
+  Caterpie: ["Metapod", "Butterfree"],
+  Weedle: ["Kakuna", "Beedrill"],
+  Pidgey: ["Pidgeotto", "Pidgeot"],
+  Rattata: ["Raticate"],
+  Spearow: ["Fearow"],
+  Ekans: ["Arbok"],
+  Pikachu: ["Raichu"],
+  Sandshrew: ["Sandslash"],
+  "Nidoran♀": ["Nidorina", "Nidoqueen"],
+  "Nidoran♂": ["Nidorino", "Nidoking"],
+  Clefairy: ["Clefable"],
+  Vulpix: ["Ninetales"],
+  Oddish: ["Gloom", "Vileplume", "Bellossom"],
+  Paras: ["Parasect"],
+  Diglett: ["Dugtrio"],
+  Meowth: ["Persian"],
+  Mankey: ["Primeape"]
+};
+
+const searchPokemonEvolution = (pokemonName) => {
+  for (let pokemon in evolutionChain) {
+    if (pokemon === pokemonName) {
+      return evolutionChain[pokemon];
+    }
+  }
+  return null;
+};
+
+export default { pokemons, searchPokemonByName, evolutionChain, searchPokemonEvolution };

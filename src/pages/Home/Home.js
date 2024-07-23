@@ -49,7 +49,7 @@ const Home = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-  const paginatedApi = api.slice(startIndex, endIndex);
+  const paginatedApi = api.pokemons.slice(startIndex, endIndex);
 
   return (
     <div style={boxStyle}>

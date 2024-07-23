@@ -8,20 +8,51 @@ import './style.css';
 export default function Detail(props) {
     const { id } = useParams();
 
-    const getDataPokemonFromAPI = api.find((data) => data.id === parseInt(id));
+    const getDataPokemonFromAPI = api.pokemons.find((data) => data.id === parseInt(id));
+    const evolutionList = api.searchPokemonEvolution(getDataPokemonFromAPI.name);
 
-    return (
-        <div className="container">
-            <Card
-                id={getDataPokemonFromAPI.id}
-                name={getDataPokemonFromAPI.name}
-                types={getDataPokemonFromAPI.types}
-                attack={getDataPokemonFromAPI.attack}
-                defense={getDataPokemonFromAPI.defense}
-                speed={getDataPokemonFromAPI.speed}
-                hp={getDataPokemonFromAPI.hp}
-                image={getDataPokemonFromAPI.image}
-            />
-        </div>
-    )
+    let dataPokemon = [];
+
+    if (evolutionList) {
+        evolutionList.forEach(element => {
+            dataPokemon.push(api.searchPokemonByName(element));
+        });
+    }
+
+    if (dataPokemon) {
+        return (
+            <div className="detail-container">
+                <Card
+                    id={getDataPokemonFromAPI.id}
+                    name={getDataPokemonFromAPI.name}
+                    types={getDataPokemonFromAPI.types}
+                    attack={getDataPokemonFromAPI.attack}
+                    defense={getDataPokemonFromAPI.defense}
+                    speed={getDataPokemonFromAPI.speed}
+                    hp={getDataPokemonFromAPI.hp}
+                    image={getDataPokemonFromAPI.image}
+                />
+                <div className="evolution-container">
+                    <div className="evolution-title">
+                        <h3 className="evolution-title">Evolution Chain</h3>
+                    </div>
+                    <div className="evolution-list">
+                        {dataPokemon.map((data) => (
+                            <Card
+                                id={data.id}
+                                name={data.name}
+                                types={data.types}
+                                attack={data.attack}
+                                defense={data.defense}
+                                speed={data.speed}
+                                hp={data.hp}
+                                image={data.image}
+                                key={data.id}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
