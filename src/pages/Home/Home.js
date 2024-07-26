@@ -1,8 +1,8 @@
-import React from 'react';
-import api from "../../services/api";
+import React, { useEffect, useState } from 'react';
+import { ListPokemons } from "../../services/api";
 import Card from "../../components/Card/Card";
 import Pagination from "../../components/Pagination/ControlButton";
-import { useState } from 'react';
+import Loading from "../../components/Loading/Loading";
 
 const Home = () => {
   const boxStyle = {
@@ -28,28 +28,48 @@ const Home = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(10);
+  const [listPokemons, setListaPokemons] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleNextPage = () => {
+  useEffect(() => {
+    const fetchPokemons = async () => {
+      try {
+        setLoading(true);
+        const pokemons = await ListPokemons();
+        setListaPokemons(pokemons);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error in ListPokemons:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchPokemons();
+  }, []);
+
+  const handleNextPage = async () => {
     setCurrentPage(currentPage + 1);
-
-    if (currentPage * itemsPerPage >= api.length) {
-      setCurrentPage(currentPage);
-    }
+    const offset = currentPage * itemsPerPage;
+    setLoading(true);
+    const newPokemonsList = await ListPokemons(offset, itemsPerPage);
+    setListaPokemons(newPokemonsList);
+    setLoading(false);
   };
 
-  const handlePreviousPage = () => {
-    setCurrentPage(currentPage - 1);
-
+  const handlePreviousPage = async () => {
     if (currentPage === 1) {
       setCurrentPage(1);
+    } else {
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      const offset = (newPage * itemsPerPage) - itemsPerPage;
+      setLoading(true);
+      const newPokemonsList = await ListPokemons(offset, itemsPerPage);
+      setListaPokemons(newPokemonsList);
+      setLoading(false);
     }
   };
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const paginatedApi = api.pokemons.slice(startIndex, endIndex);
 
   return (
     <div style={boxStyle}>
@@ -57,23 +77,25 @@ const Home = () => {
       <div style={paginationStyle}>
         <Pagination onClickNext={handleNextPage} onClickPrevious={handlePreviousPage} ></Pagination>
       </div>
-      <div style={cardContainerStyle}>
-        {paginatedApi.map((item) => {
-          return (
-            <Card
-              id={item.id}
-              name={item.name}
-              image={item.image}
-              types={item.types}
-              hp={item.hp}
-              attack={item.attack}
-              defense={item.defense}
-              speed={item.speed}
-              key={item.id}
-            />
-          );
-        })}
-      </div>
+      {loading ? (<Loading />) : (
+        <div style={cardContainerStyle}>
+          {listPokemons.map((item) => {
+            return (
+              <Card
+                id={item.id}
+                name={item.name}
+                image={item.image}
+                types={item.types}
+                hp={item.hp}
+                attack={item.attack}
+                defense={item.defense}
+                speed={item.speed}
+                key={item.id}
+              />
+            );
+          })}
+        </div>
+      )}
       <div style={paginationStyle}>
         <Pagination onClickNext={handleNextPage} onClickPrevious={handlePreviousPage} ></Pagination>
       </div>

@@ -13,7 +13,7 @@ const PaginationStyle = {
 const ControlButton = (props) => {
     return (
         <div style={PaginationStyle}>
-            <ButtonGroup size="sm" aria-label="Basic example">
+            <ButtonGroup size="sm">
                 <Button variant="primary" onClick={props.onClickPrevious}>Prev</Button>
                 <Button variant="primary" onClick={props.onClickNext}>Next</Button>
             </ButtonGroup>
