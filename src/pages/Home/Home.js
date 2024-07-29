@@ -77,7 +77,7 @@ const Home = () => {
       <div style={paginationStyle}>
         <Pagination onClickNext={handleNextPage} onClickPrevious={handlePreviousPage} ></Pagination>
       </div>
-      {loading ? (<Loading />) : (
+      { loading ? (<Loading />) : (
         <div style={cardContainerStyle}>
           {listPokemons.map((item) => {
             return (

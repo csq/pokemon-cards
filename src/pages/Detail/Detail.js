@@ -1,47 +1,70 @@
-import React from 'react';
-import api from "../../services/api";
+import React, { useEffect, useState } from 'react';
+import { ListEvolutionsChain, getDataPokemonByName } from "../../services/api";
+import { useParams } from 'react-router-dom';
 import Card from "../../components/Card/Card";
 import HorizontalScroll from "../../components/Scroll/HorizontalScroll";
-import { useParams } from 'react-router-dom';
+import Loading from "../../components/Loading/Loading";
 
 import './style.css';
 
-export default function Detail(props) {
+export default function Detail() {
     const { id } = useParams();
+    const [selectPokemon, setSelectPokemon] = useState(null);
+    const [evolutionList, setEvolutionList] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const getDataPokemonFromAPI = api.pokemons.find((data) => data.id === parseInt(id));
-    const evolutionList = api.searchPokemonEvolution(getDataPokemonFromAPI.name);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const pokemonData = await getDataPokemonByName(id);
+                setSelectPokemon(pokemonData);
 
-    let dataPokemon = [];
+                const evolutions = await ListEvolutionsChain(pokemonData.id);
+                console.log(evolutions);
+                setEvolutionList(evolutions);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    if (evolutionList) {
-        evolutionList.forEach(element => {
-            dataPokemon.push(api.searchPokemonByName(element));
-        });
+        fetchData();
+    }, [id]);
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
     }
 
-    if (dataPokemon) {
-        return (
-            <div className="detail-container">
+    if (!selectPokemon) {
+        return <div>No Pokémon found</div>;
+    }
+
+    return (
+        <div className="detail-container">
+            { loading ? (<Loading />) : (
+                <>
                 <div className="centered-container">
                     <Card
-                        id={getDataPokemonFromAPI.id}
-                        name={getDataPokemonFromAPI.name}
-                        types={getDataPokemonFromAPI.types}
-                        attack={getDataPokemonFromAPI.attack}
-                        defense={getDataPokemonFromAPI.defense}
-                        speed={getDataPokemonFromAPI.speed}
-                        hp={getDataPokemonFromAPI.hp}
-                        image={getDataPokemonFromAPI.image}
+                        id={selectPokemon.id}
+                        name={selectPokemon.name}
+                        types={selectPokemon.types}
+                        attack={selectPokemon.attack}
+                        defense={selectPokemon.defense}
+                        speed={selectPokemon.speed}
+                        hp={selectPokemon.hp}
+                        image={selectPokemon.image}
                     />
                 </div>
+                
                 <div className="evolution-container">
                     <div className="evolution-title">
                         <h3 className="evolution-title">Evolution Chain</h3>
                     </div>
                     <div className="evolution-list">
                         <HorizontalScroll>
-                            {dataPokemon.map((data) => (
+                            {evolutionList.map((data) => (
                                 <Card
                                     id={data.id}
                                     name={data.name}
@@ -57,7 +80,8 @@ export default function Detail(props) {
                         </HorizontalScroll>
                     </div>
                 </div>
-            </div>
-        )
-    }
+                </>
+            )}
+        </div>
+    );
 }
