@@ -21,7 +21,6 @@ export default function Detail() {
                 setSelectPokemon(pokemonData);
 
                 const evolutions = await ListEvolutionsChain(pokemonData.id);
-                console.log(evolutions);
                 setEvolutionList(evolutions);
             } catch (err) {
                 setError(err);
@@ -45,7 +44,6 @@ export default function Detail() {
                     <Card
                         id={selectPokemon.id}
                         name={selectPokemon.name}
-                        types={selectPokemon.types}
                         attack={selectPokemon.attack}
                         defense={selectPokemon.defense}
                         speed={selectPokemon.speed}
@@ -53,7 +51,6 @@ export default function Detail() {
                         image={selectPokemon.image}
                     />
                 </div>
-                
                 <div className="evolution-container">
                     <div className="evolution-title">
                         <h3 className="evolution-title">Evolution Chain</h3>
@@ -64,7 +61,6 @@ export default function Detail() {
                                 <Card
                                     id={data.id}
                                     name={data.name}
-                                    types={data.types}
                                     attack={data.attack}
                                     defense={data.defense}
                                     speed={data.speed}

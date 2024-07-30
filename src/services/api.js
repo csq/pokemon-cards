@@ -16,12 +16,11 @@ const ListPokemons = async (offset = 0, limit = 10) => {
       let pokemon = {
         id: response.id,
         name: response.name,
-        types: response.types.map((type) => type.type.name),
-        attack: response.stats.find((stat) => stat.stat.name === 'attack').base_stat,
-        defense: response.stats.find((stat) => stat.stat.name === 'defense').base_stat,
-        speed: response.stats.find((stat) => stat.stat.name === 'speed').base_stat,
-        hp: response.stats.find((stat) => stat.stat.name === 'hp').base_stat,
-        image: response.sprites.other.dream_world.front_default
+        attack: response.stats.find((stat) => stat.stat.name === 'attack').base_stat || 0,
+        defense: response.stats.find((stat) => stat.stat.name === 'defense').base_stat || 0,
+        speed: response.stats.find((stat) => stat.stat.name === 'speed').base_stat || 0,
+        hp: response.stats.find((stat) => stat.stat.name === 'hp').base_stat || 0,
+        image: response.sprites.other.dream_world.front_default || response.sprites.other['official-artwork'].front_default
       };
 
       pokemonsList.push(pokemon);
@@ -41,12 +40,11 @@ const getDataPokemonByName = async (name) => {
     let pokemon = {
       id: response.id,
       name: response.name,
-      types: response.types.map((type) => type.type.name),
-      attack: response.stats.find((stat) => stat.stat.name === 'attack').base_stat,
-      defense: response.stats.find((stat) => stat.stat.name === 'defense').base_stat,
-      speed: response.stats.find((stat) => stat.stat.name === 'speed').base_stat,
-      hp: response.stats.find((stat) => stat.stat.name === 'hp').base_stat,
-      image: response.sprites.other.dream_world.front_default
+      attack: response.stats.find((stat) => stat.stat.name === 'attack').base_stat || 0,
+      defense: response.stats.find((stat) => stat.stat.name === 'defense').base_stat || 0,
+      speed: response.stats.find((stat) => stat.stat.name === 'speed').base_stat || 0,
+      hp: response.stats.find((stat) => stat.stat.name === 'hp').base_stat || 0,
+      image: response.sprites.other.dream_world.front_default || response.sprites.other['official-artwork'].front_default
     };
 
     return pokemon;
@@ -69,7 +67,8 @@ const ListEvolutionsChain = async (pokemonName) => {
     const chain = evolutionChain.chain;
 
     // Add the base pokemon to the list
-    let basePokemon = await getDataPokemonByName(chain.species.name);
+    let pokemonId = chain.species.url.split('/').slice(-2, -1)[0];
+    let basePokemon = await getDataPokemonByName(pokemonId);
     evolutionList.push(basePokemon);
 
     // Recursive function to get all evolutions
