@@ -37,10 +37,6 @@ export default function Detail() {
         return <div>Error: {error.message}</div>;
     }
 
-    if (!selectPokemon) {
-        return <div>No Pokémon found</div>;
-    }
-
     return (
         <div className="detail-container">
             { loading ? (<Loading />) : (
