@@ -3,6 +3,7 @@ import { ListPokemons } from "../../services/api";
 import Card from "../../components/Card/Card";
 import Pagination from "../../components/Pagination/ControlButton";
 import Loading from "../../components/Loading/Loading";
+import Search from "../../components/Search/Search";
 
 const Home = () => {
   const boxStyle = {
@@ -73,7 +74,7 @@ const Home = () => {
 
   return (
     <div style={boxStyle}>
-      <h2>List of pokemons</h2>
+      <Search />
       <div style={paginationStyle}>
         <Pagination onClickNext={handleNextPage} onClickPrevious={handlePreviousPage} ></Pagination>
       </div>
