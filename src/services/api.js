@@ -76,7 +76,7 @@ const ListEvolutionsChain = async (pokemonName) => {
       for (let i = 0; i < evolvesTo.length; i++) {
         let pokemon = await getDataPokemonByName(evolvesTo[i].species.name);
         evolutionList.push(pokemon);
-        // Llamar recursivamente si hay más evoluciones
+        // Call the function recursively to get all evolutions
         if (evolvesTo[i].evolves_to.length > 0) {
           await getEvolutions(evolvesTo[i].evolves_to);
         }
