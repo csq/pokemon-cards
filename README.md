@@ -1,5 +1,9 @@
 # Pokémon Card Viewer
 
+<p align="center">
+  <img src="demo.gif" alt="animated" />
+</p>
+
 A simple React application that fetches and displays all Pokémon from the [PokeAPI](https://pokeapi.co/) in a card format. This project showcases how to use React for building a user interface and how to make API calls to retrieve data.
 
 ## Features
