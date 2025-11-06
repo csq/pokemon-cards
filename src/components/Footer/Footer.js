@@ -2,7 +2,8 @@ const footerStyle = {
   width: "100%",
   backgroundColor: "#f1f1f1",
   color: "black",
-  textAlign: "center"
+  textAlign: "center",
+  marginTop: "auto",
 };
 
 export default function Footer() {
