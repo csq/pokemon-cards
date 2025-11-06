@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ListPokemons } from "../../services/api";
 import Card from "../../components/Card/Card";
 import Pagination from "../../components/Pagination/ControlButton";

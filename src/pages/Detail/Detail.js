@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ListEvolutionsChain, getDataPokemonByName } from "../../services/api";
 import { useParams } from 'react-router-dom';
 import Card from "../../components/Card/Card";

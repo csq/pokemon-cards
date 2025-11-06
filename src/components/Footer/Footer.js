@@ -1,5 +1,3 @@
-import React from 'react';
-
 const footerStyle = {
   width: "100%",
   backgroundColor: "#f1f1f1",
