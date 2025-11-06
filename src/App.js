@@ -3,6 +3,7 @@ import Home from './pages/Home/Home';
 import Footer from './components/Footer/Footer';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css';
 
 function App() {
   return (
