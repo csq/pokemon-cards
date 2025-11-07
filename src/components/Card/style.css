@@ -16,10 +16,12 @@
     width: 100%;
     align-self: center;
     font-weight: bold;
+    font-style: oblique;
 }
 
 .card-header h6 {
     font-size: 20px;
+    font-style: normal;
     align-content: center;
 }
 
